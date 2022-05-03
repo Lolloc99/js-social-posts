@@ -146,7 +146,7 @@ function contentDivMaker(container, userContent, userMedia) {
 /*
 Descrizione: la funzione prende 3 dati di cui uno sempre l'elemento a cui appendersi (container), gli altri 2 servono a creare gli elementi restanti del post, ovvero il bottone dei like e il numero di like ricevuti
 */
-function postInfoDivMaker(container, userId, userThumbs) {
+function postInfoDivMaker(container, userId, userLikes) {
     const divPostInfo = document.createElement("div");
     divPostInfo.classList.add("post__footer");
     divPostInfo.innerHTML = 
@@ -158,7 +158,7 @@ function postInfoDivMaker(container, userId, userThumbs) {
         </a>
     </div>
     <div class="likes__counter">
-        Piace a <b id="likeCounter1" class="js-likes-counter">${userThumbs}</b> persone
+        Piace a <b id="like-counter-${userId}" class="js-likes-counter-${userId}">${userLikes}</b> persone
     </div>
     </div>`
 
@@ -169,10 +169,10 @@ function postInfoDivMaker(container, userId, userThumbs) {
 
         likedPost.push(userId)
         console.log(likedPost);
-
-        let like = document.getElementById("likeCounte1");
-        like = userThumbs++;
-        console.log(like);
+        
+        userLikes++;
+        document.querySelector(`.js-likes-counter-${userId}`).innerHTML = userLikes;
+        console.log(userLikes);
     });
 
     container.append(divPostInfo)
