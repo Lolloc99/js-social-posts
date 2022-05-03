@@ -92,41 +92,8 @@ const posts = [
     }
 ];
 
-/* Esempio post
-<!-- post di esempio/template, da togliere/commentare e generare da JS -->
-
-    <div class="post">
-        <div class="post__header"> <!-- Sezione Header della card -->
-            <div class="post-meta">                    
-                <div class="post-meta__icon"> <!-- Immagine profilo -->
-                    <img class="profile-pic" src="https://unsplash.it/300/300?image=15" alt="Phil Mangione">                    
-                </div>
-                <div class="post-meta__data"> <!-- Info profilo -->
-                    <div class="post-meta__author">Phil Mangione</div>
-                    <div class="post-meta__time">4 mesi fa</div>
-                </div>                    
-            </div>
-        </div>
-        <div class="post__text">Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.</div> <!-- Testo del post -->
-        <div class="post__image"> <!-- Immagine del post -->
-            <img src="https://unsplash.it/600/300?image=171" alt="">
-        </div>
-        <div class="post__footer"> <!-- Sezione Footer della card -->
-            <div class="likes js-likes">
-                <div class="likes__cta"> <!-- tasto mi piace -->
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
-                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                        <span class="like-button__label">Mi Piace</span>
-                    </a>
-                </div>
-                <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">80</b> persone
-                </div>
-            </div> 
-        </div>            
-    </div>
-*/
 const container = document.getElementById("container");
+const likedPost = [];
 
 posts.forEach(element => {
     const divPostCard = mainDivMaker(element.author.image, element.author.name)
@@ -134,9 +101,6 @@ posts.forEach(element => {
     postInfoDivMaker(divPostCard, element.id, element.likes)
     container.append(divPostCard)
 });
-
-
-
 
 // FUNCTIONS
 
@@ -146,19 +110,19 @@ Descrizione: la funzione prende 2 dati, crea un elemento div nell'html, gli affi
 function mainDivMaker(imgAuthor, nameAuthor) {
     
     const divPostCard = document.createElement("div");
-        divPostCard.classList.add("post");
-        divPostCard.innerHTML = 
-        `<div class="post__header">
-            <div class="post-meta">                    
-                <div class="post-meta__icon">
-                    <img class="profile-pic" src="${imgAuthor}" alt="${nameAuthor}">                    
-                </div>
-                <div class="post-meta__data">
-                    <div class="post-meta__author">${nameAuthor}</div>
-                    <div class="post-meta__time">4 mesi fa</div>
-                </div>                    
+    divPostCard.classList.add("post");
+    divPostCard.innerHTML = 
+    `<div class="post__header">
+        <div class="post-meta">                    
+            <div class="post-meta__icon">
+                <img class="profile-pic" src="${imgAuthor}" alt="${nameAuthor}">                    
             </div>
-        </div>`
+            <div class="post-meta__data">
+                <div class="post-meta__author">${nameAuthor}</div>
+                <div class="post-meta__time">4 mesi fa</div>
+            </div>                    
+        </div>
+    </div>`
 
     return divPostCard
 }
@@ -168,15 +132,15 @@ Descrizione: la funzione prende 3 dati di cui uno l'elemento a cui appendersi (c
 */
 function contentDivMaker(container, userContent, userMedia) {
     const divContentText = document.createElement("div");
-        divContentText.classList.add("post__text");
-        divContentText.innerHTML = `${userContent}`
+    divContentText.classList.add("post__text");
+    divContentText.innerHTML = `${userContent}`
 
     const divContentImage = document.createElement("div");
-        divContentImage.classList.add("post__image");
-        divContentImage.innerHTML = `<img src="${userMedia}" alt="${userContent}">`
+    divContentImage.classList.add("post__image");
+    divContentImage.innerHTML = `<img src="${userMedia}" alt="${userContent}">`
 
-        container.append(divContentText)
-        container.append(divContentImage)
+    container.append(divContentText)
+    container.append(divContentImage)
 }
 
 /*
@@ -184,19 +148,32 @@ Descrizione: la funzione prende 3 dati di cui uno sempre l'elemento a cui append
 */
 function postInfoDivMaker(container, userId, userThumbs) {
     const divPostInfo = document.createElement("div");
-        divPostInfo.classList.add("post__footer");
-        divPostInfo.innerHTML = 
-        `<div class="likes js-likes">
-        <div class="likes__cta">
-            <a class="like-button  js-like-button" href="#" data-postid="${userId}">
-                <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                <span class="like-button__label">Mi Piace</span>
-            </a>
-        </div>
-        <div class="likes__counter">
-            Piace a <b id="like-counter-1" class="js-likes-counter">${userThumbs}</b> persone
-        </div>
-        </div>`
+    divPostInfo.classList.add("post__footer");
+    divPostInfo.innerHTML = 
+    `<div class="likes js-likes">
+    <div class="likes__cta">
+        <a class="like-button" js-like-button href="#" data-postid="${userId}">
+            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+            <span class="like-button__label">Mi Piace</span>
+        </a>
+    </div>
+    <div class="likes__counter">
+        Piace a <b id="likeCounter1" class="js-likes-counter">${userThumbs}</b> persone
+    </div>
+    </div>`
 
-        container.append(divPostInfo)
+    divPostInfo.querySelector(".like-button").addEventListener("click", function() {
+        event.preventDefault()
+
+        this.classList.add("like-button--liked");
+
+        likedPost.push(userId)
+        console.log(likedPost);
+
+        let like = document.getElementById("likeCounte1");
+        like = userThumbs++;
+        console.log(like);
+    });
+
+    container.append(divPostInfo)
 }
