@@ -55,7 +55,7 @@ const posts = [
         "media": "https://unsplash.it/600/300?image=172", //immagine post
 
         "author": {
-            "name": "Giacomo Antonelli",
+            "name": "Vitantonio Paparella",
             "image": "https://unsplash.it/300/300?image=16" // immagine utente
         },
 
@@ -69,12 +69,12 @@ const posts = [
         "media": "https://unsplash.it/600/300?image=173", //immagine post
 
         "author": {
-            "name": "Julia Alexorf",
+            "name": "Sara Genuardi",
             "image": "https://unsplash.it/300/300?image=17" // immagine utente
         },
 
-        "likes": 46,
-        "created": "2021-02-29"
+        "likes": 166,
+        "created": "2021-06-16"
     },
 
     {
@@ -136,7 +136,13 @@ posts.forEach(element => {
 });
 
 
+
+
 // FUNCTIONS
+
+/*
+Descrizione: la funzione prende 2 dati, crea un elemento div nell'html, gli affida una classe, al suo interno inserisce nome e immagine dell'utente, restituisce la variabile a cui poi si appendereanno le prossime funzioni
+*/
 function mainDivMaker(imgAuthor, nameAuthor) {
     
     const divPostCard = document.createElement("div");
@@ -157,6 +163,9 @@ function mainDivMaker(imgAuthor, nameAuthor) {
     return divPostCard
 }
 
+/*
+Descrizione: la funzione prende 3 dati di cui uno l'elemento a cui appendersi (container), gli altri 2 servono a creare gli elementi del post, ovvero il testo e l'immagine del post
+*/
 function contentDivMaker(container, userContent, userMedia) {
     const divContentText = document.createElement("div");
         divContentText.classList.add("post__text");
@@ -170,6 +179,9 @@ function contentDivMaker(container, userContent, userMedia) {
         container.append(divContentImage)
 }
 
+/*
+Descrizione: la funzione prende 3 dati di cui uno sempre l'elemento a cui appendersi (container), gli altri 2 servono a creare gli elementi restanti del post, ovvero il bottone dei like e il numero di like ricevuti
+*/
 function postInfoDivMaker(container, userId, userThumbs) {
     const divPostInfo = document.createElement("div");
         divPostInfo.classList.add("post__footer");
