@@ -87,7 +87,7 @@ const posts = [
             "image": "https://unsplash.it/300/300?image=18" // immagine utente
         },
 
-        "likes": 230,
+        "likes": 23,
         "created": "2021-1-8"
     }
 ];
@@ -129,12 +129,15 @@ const posts = [
 const container = document.getElementById("container");
 
 posts.forEach(element => {
-    divMaker(container)
+    const divPostCard = mainDivMaker(element.author.image, element.author.name)
+    contentDivMaker(divPostCard, element.content, element.media)
+    postInfoDivMaker(divPostCard, element.id, element.likes)
+    container.append(divPostCard)
 });
 
 
-// Creare elementi da appendere poi a "container"
-function divMaker(container) {
+// FUNCTIONS
+function mainDivMaker(imgAuthor, nameAuthor) {
     
     const divPostCard = document.createElement("div");
         divPostCard.classList.add("post");
@@ -142,31 +145,46 @@ function divMaker(container) {
         `<div class="post__header">
             <div class="post-meta">                    
                 <div class="post-meta__icon">
-                    <img class="profile-pic" src="https://unsplash.it/300/300?image=15" alt="Phil Mangione">                    
+                    <img class="profile-pic" src="${imgAuthor}" alt="${nameAuthor}">                    
                 </div>
-                <div class="post-meta__data"> <!-- Info profilo -->
-                    <div class="post-meta__author">Phil Mangione</div>
+                <div class="post-meta__data">
+                    <div class="post-meta__author">${nameAuthor}</div>
                     <div class="post-meta__time">4 mesi fa</div>
                 </div>                    
             </div>
-        </div>
-        <div class="post__text">Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.</div>
-        <div class="post__image">
-            <img src="https://unsplash.it/600/300?image=171" alt="">
-        </div>
-        <div class="post__footer">
-            <div class="likes js-likes">
-                <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
-                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                        <span class="like-button__label">Mi Piace</span>
-                    </a>
-                </div>
-                <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">80</b> persone
-                </div>
-            </div> 
         </div>`
 
-    container.append(divPostCard)
+    return divPostCard
+}
+
+function contentDivMaker(container, userContent, userMedia) {
+    const divContentText = document.createElement("div");
+        divContentText.classList.add("post__text");
+        divContentText.innerHTML = `${userContent}`
+
+    const divContentImage = document.createElement("div");
+        divContentImage.classList.add("post__image");
+        divContentImage.innerHTML = `<img src="${userMedia}" alt="${userContent}">`
+
+        container.append(divContentText)
+        container.append(divContentImage)
+}
+
+function postInfoDivMaker(container, userId, userThumbs) {
+    const divPostInfo = document.createElement("div");
+        divPostInfo.classList.add("post__footer");
+        divPostInfo.innerHTML = 
+        `<div class="likes js-likes">
+        <div class="likes__cta">
+            <a class="like-button  js-like-button" href="#" data-postid="${userId}">
+                <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                <span class="like-button__label">Mi Piace</span>
+            </a>
+        </div>
+        <div class="likes__counter">
+            Piace a <b id="like-counter-1" class="js-likes-counter">${userThumbs}</b> persone
+        </div>
+        </div>`
+
+        container.append(divPostInfo)
 }
